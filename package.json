@@ -1,5 +1,5 @@
 {
-  "name": "weather-forecast",
+  "name": "posts-js",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Vitalina-Oleksiienko/weather-forecast.git"
+    "url": "git+https://github.com/Vitalina-Oleksiienko/posts-js.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Vitalina-Oleksiienko/weather-forecast/issues"
+    "url": "https://github.com/Vitalina-Oleksiienko/posts-js/issues"
   },
-  "homepage": "https://github.com/Vitalina-Oleksiienko/weather-forecast#readme",
+  "homepage": "https://github.com/Vitalina-Oleksiienko/posts-js#readme",
   "dependencies": {
     "axios": "^0.26.1",
     "lodash.debounce": "^4.0.8",

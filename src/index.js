@@ -16,19 +16,22 @@ import getRootDir from 'parcel-bundler/lib/utils/getRootDir';
 const refs = {
   cardContainer: document.querySelector('.gallery')
 }
-fetch('https://jsonplaceholder.typicode.com/posts/')
-  .then(response => {
-    return response.json();
-  })
-  .then(post => {
-    console.log(post);
+
+fetchPosts().then(renderPostsCard)
+  .catch(err => console.log(err));
+
+function fetchPosts() {
+  return fetch('https://jsonplaceholder.typicode.com/posts/')
+    .then(response => {
+      return response.json();
+    });
+}
+
+function renderPostsCard(post) {
     const markup = cardTpl(post);
-    console.log(markup);
+    //console.log(markup);
     refs.cardContainer.innerHTML = markup;
-  })
-  .catch(err => {
-    console.log(err);
-  });
+}
 ///////////////////////////////////////////////////////////////
 
 // fetch('https://api.openweathermap.org/data/2.5/weather?appid=6f7c3a6f8e3ec51e0c958f8f8708d0f0')
