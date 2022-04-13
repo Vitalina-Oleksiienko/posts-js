@@ -1,0 +1,32 @@
+{
+  "name": "weather-forecast",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel src/*.html",
+    "build": "parcel build src/*.html --public-url /parcel-project-template/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vitalina-Oleksiienko/weather-forecast.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vitalina-Oleksiienko/weather-forecast/issues"
+  },
+  "homepage": "https://github.com/Vitalina-Oleksiienko/weather-forecast#readme",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "lodash.debounce": "^4.0.8",
+    "parcel": "^2.4.0",
+    "parcel-bundler": "^1.12.5",
+    "parcel-plugin-handlebars-precompile": "^1.0.2",
+    "parcel-plugin-nuke-dist": "^1.0.1",
+    "pnotify": "^5.2.0",
+    "posthtml-include": "^1.7.2",
+    "sass": "^1.49.11"
+  }
+}
