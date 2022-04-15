@@ -3,7 +3,8 @@ import axios from 'axios';
 import { alert, defaultModules } from '../node_modules/@pnotify/core/dist/PNotify.js';
 import * as PNotifyMobile from '../node_modules/@pnotify/mobile/dist/PNotifyMobile.js';
 import '@pnotify/core/dist/BrightTheme.css';
-import PostsApiService from './apiService';
+import API from './js/apiService';
+import getRefs from './js/getRefs';
 import cardTpl from './templates/card.hbs';
 import getRootDir from 'parcel-bundler/lib/utils/getRootDir';
 
@@ -13,24 +14,20 @@ import getRootDir from 'parcel-bundler/lib/utils/getRootDir';
     text: 'Notice me, senpai!'
   });
 ///////////////////////////////////////////////////
-const refs = {
-  cardContainer: document.querySelector('.gallery')
-}
+const refs = getRefs();
 
-fetchPosts().then(renderPostsCard)
-  .catch(err => console.log(err));
-
-function fetchPosts() {
-  return fetch('https://jsonplaceholder.typicode.com/posts/')
-    .then(response => {
-      return response.json();
-    });
-}
+API.fetchPosts()
+  .then(renderPostsCard)
+  .catch(onFetchError);
 
 function renderPostsCard(post) {
     const markup = cardTpl(post);
     //console.log(markup);
     refs.cardContainer.innerHTML = markup;
+}
+
+function onFetchError(error) {
+  alert('Упс, щось пішло не так');
 }
 ///////////////////////////////////////////////////////////////
 
