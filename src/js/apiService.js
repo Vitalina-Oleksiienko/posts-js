@@ -1,8 +1,9 @@
-const BASE_URL = 'https://jsonplaceholder.typicode.com'
+// const BASE_URL = 'https://jsonplaceholder.typicode.com'
 
-function fetchPosts() {
+// function fetchPosts() {
   
-  return fetch(`${BASE_URL}/posts?_limit=10$_page=1`).then(response => response.json());
-}
+//   return fetch(`${BASE_URL}/posts?_limit=10$_page=1`)
+//     .then(response => response.json());
+// }
 
-export default { fetchPosts };
+// export default { fetchPosts };

@@ -1,5 +1,5 @@
-export default function getRefs() {
-    return {
-        cardContainer: document.querySelector('.gallery')
-    };
-}
+// export default function getRefs() {
+//     return {
+//         cardContainer: document.querySelector('.gallery')
+//     };
+// }
