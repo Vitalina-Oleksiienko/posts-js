@@ -1,12 +1,9 @@
 import './sass/main.scss';
 import axios from 'axios';
-
 import { alert, defaultModules } from '../node_modules/@pnotify/core/dist/PNotify.js';
 import * as PNotifyMobile from '../node_modules/@pnotify/mobile/dist/PNotifyMobile.js';
 import '@pnotify/core/dist/BrightTheme.css';
-import API from './js/apiService';
-import getRefs from './js/getRefs';
-import cardTpl from './templates/card.hbs';
+
 import getRootDir from 'parcel-bundler/lib/utils/getRootDir';
 
   defaultModules.set(PNotifyMobile, {});
@@ -17,7 +14,8 @@ import getRootDir from 'parcel-bundler/lib/utils/getRootDir';
 
 const refs = {
   cardGallery: document.querySelector('.gallery'),
-  loadMore: document.querySelector('#more')
+  loadMore: document.querySelector('#more'),
+  openComment: document.querySelector('.comment')
 }
 
 let currentPage = 1;
@@ -32,57 +30,94 @@ const loadMoreBtn = (e) => {
   .then(posts => renderPostsCard(posts.data))
   .then(() => currentPage++)
   .catch (err => console.log(err));
-
 }
 
-
-
-function createItem({id, userId, title, body}) {
+function createPost({id, userId, title, body}) {
   const article = `<article>
-  <div class="card">
-    <div class="info">
-        <p class="info-item">
-            <i class="material-icons">ID:${id}</i>  
-        </p>
-        <p class="info-item">
-            <i class="material-icons">UserId:${userId}</i>
-        </p>
-        <p class="info-item">
-            <i class="material-icons">Title:${title}</i>
-        </p>
-        <p class="info-item">
-            <i class="material-icons">Body:${body}</i>
-        </p>
-    </div>
-</div>
-</article>
-`
-refs.cardGallery.insertAdjacentHTML('beforeend', article)    
+        <div class="card" onclick="window.open('./partials/comment.html', '_blank')">
+          <div class="info">
+              <p class="info-item">
+                  <i class="material-icons">ID:${id}</i>
+              </p>
+              <p class="info-item">
+                  <i class="material-icons">UserId:${userId}</i>
+              </p>
+              <p class="info-item">
+                  <i class="material-icons">Title:${title}</i>
+              </p>
+              <p class="info-item">
+                  <i class="material-icons">Body:${body}</i>
+              </p>
+          </div>
+      </div>
+      </article>`
+refs.cardGallery.insertAdjacentHTML('beforeend', article)
 }
 
 function renderPostsCard(arr) {
-  arr.forEach(el => createItem(el))
+  arr.forEach(el => createPost(el))
 }
 
 refs.loadMore.addEventListener('click', loadMoreBtn)
 
-///////////////////////////////////////////////////
-// const refs = getRefs();
+axios.get ('https://jsonplaceholder.typicode.com/posts/1/comments')
+  .then(comments => renderPostItem(comments.data))
 
-// API.fetchPosts()
-//   .then(renderPostsCard)
-//   .catch(onFetchError);
+// const postInfo = (e) => {
+//   e.preventDefault()
+//   axios.get ('https://jsonplaceholder.typicode.com/posts/1/comments')
+//   .then(comments => renderPostItem(comments.data))
+//   .then((json) => console.log(json));
 
-// function renderPostsCard(post) {
-//     const markup = cardTpl(post);
-//     //console.log(markup);
-//     refs.cardContainer.innerHTML = markup;
 // }
 
-// function onFetchError(error) {
-//   alert('Упс, щось пішло не так');
+function createPostItem({ id, body, postId, name, email}) {
+  const article = `<article>
+        <div class="card">
+          <div class="info">
+              <p class="info-item">
+                  <i class="material-icons">Comment:${id}</i>  
+              </p>
+                <p class="info-item">
+                  <i class="material-icons">PostId:${postId}</i>  
+              </p>
+          </div>
+          <div class="info">
+              
+              <p class="info-item">
+                  <i class="material-icons">Name:${name}</i>
+              </p>
+              <p class="info-item">
+                  <i class="material-icons">Email:${email}</i>
+              </p>
+              <p class="info-item">
+                  <i class="material-icons">Body:${body}</i>
+              </p>
+          </div>
+      </div>
+      </article>`
+  refs.openComment.insertAdjacentHTML('beforeend', article)  
+}
+
+function renderPostItem(arr) {
+  arr.forEach(el => createPostItem(el))
+}
+
+//refs.openComment.addEventListener('click', postInfo)
+// document.addEventListener('click', openComment).onclick = function openComment() {
+//     window.location.replace = './partials/comment.html'
 // }
-///////////////////////////////////////////////////////////////
+
+// function openCommentClick() {
+//   return window.document.open('./partials/comment.html')
+// }
+// refs.openComment.addEventListener('click', openCommentClick)
+
+fetch('https://jsonplaceholder.typicode.com/posts/1/comments')
+  .then((response) => response.json())
+  .then((json) => console.log(json));
+
+
 
 // fetch('https://api.openweathermap.org/data/2.5/weather?appid=6f7c3a6f8e3ec51e0c958f8f8708d0f0')
 // //fetch('https://jsonplaceholder.typicode.com/posts')
