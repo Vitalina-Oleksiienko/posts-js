@@ -5,9 +5,7 @@ import * as PNotifyMobile from '../node_modules/@pnotify/mobile/dist/PNotifyMobi
 import '@pnotify/core/dist/BrightTheme.css';
 
 import getRootDir from 'parcel-bundler/lib/utils/getRootDir';
-
   defaultModules.set(PNotifyMobile, {});
- 
   alert({
     text: 'Notice me, senpai!'
   });
@@ -15,7 +13,8 @@ import getRootDir from 'parcel-bundler/lib/utils/getRootDir';
 const refs = {
   cardGallery: document.querySelector('.gallery'),
   loadMore: document.querySelector('#more'),
-  openComment: document.querySelector('.comment')
+  openComment: document.querySelector('#card-info'),
+  datailPost: document.querySelector('#comment')
 }
 
 let currentPage = 1;
@@ -34,7 +33,7 @@ const loadMoreBtn = (e) => {
 
 function createPost({id, userId, title, body}) {
   const article = `<article>
-        <div class="card" onclick="window.open('./partials/comment.html', '_blank')">
+        <div class="card card-info container" id="card-info">
           <div class="info">
               <p class="info-item">
                   <i class="material-icons">ID:${id}</i>
@@ -50,7 +49,7 @@ function createPost({id, userId, title, body}) {
               </p>
           </div>
       </div>
-      </article>`
+    </article>`
 refs.cardGallery.insertAdjacentHTML('beforeend', article)
 }
 
@@ -60,20 +59,20 @@ function renderPostsCard(arr) {
 
 refs.loadMore.addEventListener('click', loadMoreBtn)
 
-axios.get ('https://jsonplaceholder.typicode.com/posts/1/comments')
-  .then(comments => renderPostItem(comments.data))
-
-// const postInfo = (e) => {
-//   e.preventDefault()
-//   axios.get ('https://jsonplaceholder.typicode.com/posts/1/comments')
+// axios.get ('https://jsonplaceholder.typicode.com/posts/1/comments')
 //   .then(comments => renderPostItem(comments.data))
-//   .then((json) => console.log(json));
 
-// }
+const postInfo = () => {
+  //e.preventDefault()
+  
+  axios.get ('https://jsonplaceholder.typicode.com/posts/1/comments')
+  .then(comments => renderPostItem(comments.data))
+  .catch (err => console.log(err));
+}
 
 function createPostItem({ id, body, postId, name, email}) {
-  const article = `<article>
-        <div class="card">
+  const articleItem = `<article>
+        <div class="card" >
           <div class="info">
               <p class="info-item">
                   <i class="material-icons">Comment:${id}</i>  
@@ -83,7 +82,6 @@ function createPostItem({ id, body, postId, name, email}) {
               </p>
           </div>
           <div class="info">
-              
               <p class="info-item">
                   <i class="material-icons">Name:${name}</i>
               </p>
@@ -96,28 +94,20 @@ function createPostItem({ id, body, postId, name, email}) {
           </div>
       </div>
       </article>`
-  refs.openComment.insertAdjacentHTML('beforeend', article)  
+  refs.detailPost.innerHTML = articleItem;
 }
 
 function renderPostItem(arr) {
   arr.forEach(el => createPostItem(el))
 }
 
-//refs.openComment.addEventListener('click', postInfo)
-// document.addEventListener('click', openComment).onclick = function openComment() {
-//     window.location.replace = './partials/comment.html'
-// }
-
-// function openCommentClick() {
-//   return window.document.open('./partials/comment.html')
-// }
-// refs.openComment.addEventListener('click', openCommentClick)
-
-fetch('https://jsonplaceholder.typicode.com/posts/1/comments')
-  .then((response) => response.json())
-  .then((json) => console.log(json));
+refs.openComment.addEventListener('click', postInfo)
 
 
+
+// fetch('https://jsonplaceholder.typicode.com/posts/1/comments')
+//   .then((response) => response.json())
+//   .then((json) => console.log(json));
 
 // fetch('https://api.openweathermap.org/data/2.5/weather?appid=6f7c3a6f8e3ec51e0c958f8f8708d0f0')
 // //fetch('https://jsonplaceholder.typicode.com/posts')
