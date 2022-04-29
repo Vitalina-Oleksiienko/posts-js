@@ -14,7 +14,7 @@ const refs = {
   cardGallery: document.querySelector('.gallery'),
   loadMore: document.querySelector('#more'),
   openComment: document.querySelector('#card-info'),
-  datailPost: document.querySelector('#comment')
+  detailPost: document.querySelector('#comment')
 }
 
 let currentPage = 1;
@@ -23,12 +23,15 @@ axios.get(`https://jsonplaceholder.typicode.com/posts?_limit=10&_page=${currentP
   .then(() => currentPage++)
   .catch(err => console.log(err));
   
+  
+  
 const loadMoreBtn = (e) => {
   e.preventDefault()
   axios.get(`https://jsonplaceholder.typicode.com/posts?_limit=10&_page=${currentPage}`)
   .then(posts => renderPostsCard(posts.data))
   .then(() => currentPage++)
-  .catch (err => console.log(err));
+    .catch(err => console.log(err))
+  //.finally(() => renderPostCard.reset());
 }
 
 function createPost({id, userId, title, body}) {
@@ -61,13 +64,12 @@ refs.loadMore.addEventListener('click', loadMoreBtn)
 
 // axios.get ('https://jsonplaceholder.typicode.com/posts/1/comments')
 //   .then(comments => renderPostItem(comments.data))
-
 const postInfo = () => {
   //e.preventDefault()
-  
   axios.get ('https://jsonplaceholder.typicode.com/posts/1/comments')
   .then(comments => renderPostItem(comments.data))
-  .catch (err => console.log(err));
+    .catch(err => console.log(err))
+  
 }
 
 function createPostItem({ id, body, postId, name, email}) {
